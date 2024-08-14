@@ -1,6 +1,6 @@
 services:
   overseerr:
-    image: ghcr.io/tw1zt3d2four7/overseer:v0.1.0_dev
+    image: ghcr.io/tw1zt3d2four7/overseer/standard:v0.1.0_dev
     container_name: overseerr
     pull_policy: always
     restart: unless-stopped
