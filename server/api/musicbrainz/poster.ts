@@ -18,12 +18,16 @@ async function getPosterFromMB(
     try {
       const artist = await (lidarr as LidarrAPI).getArtist(element.id);
       if (artist.images.find((i) => i.coverType === 'poster')?.url) {
-        return LidarrAPI.buildUrl(
-          lidarrSettings,
-          artist.images.find((i) => i.coverType === 'poster')?.url
-        );
-      } else {
-        return undefined;
+        const posterUrl = artist.images.find(
+          (i) => i.coverType === 'poster'
+        )?.url;
+        if (posterUrl?.startsWith('/MediaCover/') || artist.id !== undefined) {
+          return `/imageproxy/lidarr?artistId=${artist.id}`;
+        } else if (posterUrl?.startsWith('/MediaCoverProxy/')) {
+          return undefined;
+        } else {
+          return posterUrl;
+        }
       }
     } catch (e) {
       return undefined;

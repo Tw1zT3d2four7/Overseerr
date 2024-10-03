@@ -1,6 +1,6 @@
 import useSettings from '@app/hooks/useSettings';
-import type { ImageLoader, ImageProps } from 'next/image';
-import Image from 'next/image';
+import type { ImageLoader, ImageProps } from 'next/legacy/image';
+import Image from 'next/legacy/image';
 import { useState } from 'react';
 
 const imageLoader: ImageLoader = ({ src }) => src;
@@ -21,7 +21,9 @@ const CachedImage = ({ src, ...props }: ImageProps) => {
     const parsedUrl = new URL(imageUrl);
 
     if (parsedUrl.host === 'image.tmdb.org' && currentSettings.cacheImages) {
-      setImageUrl(imageUrl.replace('https://image.tmdb.org', '/imageproxy'));
+      setImageUrl(
+        imageUrl.replace('https://image.tmdb.org', '/imageproxy/tmdb')
+      );
     }
   }
 
